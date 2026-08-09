@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Atlas Digital da Bacia Hidrográfica do Rio Pindaré">
+  <title>Atlas Digital — Bacia do Rio Pindaré</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.2.0/dist/maplibre-gl.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button id="menuBtn" class="ghost-btn" type="button" aria-label="Abrir ou recolher painel">☰</button>
+    <div class="brand">
+      <span class="kicker">ATLAS DIGITAL</span>
+      <h1>Bacia Hidrográfica do Rio Pindaré</h1>
+    </div>
+    <button id="homeBtn" class="ghost-btn" type="button" title="Voltar à bacia" aria-label="Voltar à extensão da bacia">⌂</button>
+  </header>
+
+  <aside id="sidebar" class="sidebar" aria-label="Painel de camadas">
+    <div class="sidebar-scroll">
+      <section class="hero-card">
+        <span class="eyebrow">Maranhão • Brasil</span>
+        <strong>40.442,8 km²</strong>
+        <span class="muted">Área total informada no limite da bacia</span>
+        <div class="mini-stats">
+          <span><b>37</b> municípios interceptados</span>
+          <span><b>18</b> sedes municipais</span>
+          <span><b>6.422</b> trechos hidrográficos</span>
+        </div>
+      </section>
+
+      <section class="panel-section">
+        <div class="section-head"><h2>Mapa-base</h2></div>
+        <select id="basemapSelect" class="select">
+          <option value="positron">Claro — Positron</option>
+          <option value="liberty">Cartográfico — Liberty</option>
+          <option value="dark">Escuro — Dark</option>
+        </select>
+      </section>
+
+      <section class="panel-section">
+        <div class="section-head"><h2>Limites e divisões</h2></div>
+        <label class="layer-item"><input data-layer="bacia" type="checkbox" checked><span><b>Limite da bacia</b><small>Referência oficial do projeto</small></span></label>
+        <label class="layer-item"><input data-layer="municipios" type="checkbox"><span><b>Municípios</b><small>37 municípios que interceptam a bacia</small></span></label>
+        <label class="layer-item"><input data-layer="sedes" type="checkbox" checked><span><b>Sedes municipais</b><small>18 sedes dentro da bacia</small></span></label>
+      </section>
+
+      <section class="panel-section">
+        <div class="section-head"><h2>Meio físico</h2></div>
+        <label class="layer-item"><input data-layer="geologia" type="checkbox"><span><b>Geologia</b><small>7 unidades</small></span></label>
+        <label class="layer-item disabled"><input type="checkbox" disabled><span><b>Geomorfologia</b><small>Arquivo recebido requer revisão de atributos</small></span></label>
+        <label class="layer-item"><input data-layer="solos" type="checkbox"><span><b>Solos</b><small>16 classes</small></span></label>
+      </section>
+
+      <section class="panel-section">
+        <div class="section-head"><h2>Recursos hídricos</h2></div>
+        <label class="layer-item"><input data-layer="hidrografia" type="checkbox"><span><b>Hidrografia</b><small>Carregamento sob demanda</small></span></label>
+        <label class="layer-item disabled"><input type="checkbox" disabled><span><b>MapBiomas Água</b><small>Próxima etapa • raster recortado pela bacia</small></span></label>
+      </section>
+
+      <section class="panel-section">
+        <div class="section-head"><h2>Uso e planejamento</h2></div>
+        <label class="layer-item"><input data-layer="potencialidades" type="checkbox"><span><b>Potencialidades</b><small>10 pontos cadastrados</small></span></label>
+        <label class="layer-item"><input data-layer="mapbiomas" type="checkbox"><span><b>Uso e cobertura — MapBiomas</b><small>Coleção 10.1 • 30 m • COG</small></span></label>
+        <div class="temporal-control">
+          <label for="mapbiomasYear">Ano</label>
+          <select id="mapbiomasYear" class="select">
+            <option value="2024">2024</option>
+          </select>
+          <small id="mapbiomasStatus">Aguardando data/rasters/mapbiomas_2024.tif</small>
+        </div>
+      </section>
+
+      <section class="panel-section">
+        <div class="section-head"><h2>Buscar município</h2></div>
+        <div class="search-row">
+          <select id="municipioSelect" class="select"><option value="">Selecione...</option></select>
+          <button id="zoomMunicipioBtn" type="button" class="primary-btn">Ir</button>
+        </div>
+      </section>
+
+      <section id="legendPanel" class="panel-section legend-panel hidden">
+        <div class="section-head"><h2>Legenda</h2></div>
+        <div id="legendContent"></div>
+      </section>
+
+      <section class="notice">
+        <strong>Regra dos rasters</strong>
+        <p>Uso e cobertura, água e qualquer outro raster serão exibidos somente dentro do limite da Bacia do Rio Pindaré. Fora dela, os pixels serão transparentes.</p>
+      </section>
+    </div>
+  </aside>
+
+  <main id="map" aria-label="Mapa interativo da Bacia Hidrográfica do Rio Pindaré"></main>
+  <div id="loading" class="loading hidden" role="status" aria-live="polite">Carregando camada…</div>
+  <div class="source-badge">Base: OpenFreeMap / OpenStreetMap • Uso e cobertura: MapBiomas</div>
+
+  <script src="https://unpkg.com/maplibre-gl@6.2.0/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/@geomatico/maplibre-cog-protocol@0.9.0/dist/index.js"></script>
+  <script src="js/mapbiomas.js"></script>
+  <script src="js/map.js"></script>
+</body>
+</html>
